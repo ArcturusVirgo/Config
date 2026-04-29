@@ -1,0 +1,10 @@
+-- 引用文件
+require('plugins.theme')
+require('plugins.treesitter')
+require('plugins.tree')
+require('plugins.lsp')
+require('plugins.tiny-inline-diagnostic')
+require('plugins.blink')
+require('plugins.aerial')
+require('plugins.overseer')
+require('plugins.debugging')
