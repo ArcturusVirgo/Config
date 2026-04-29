@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug GFortran File",
+            "type": "cppdbg",             // [修改1] 必须改为 cppdbg 以支持 GDB
+            "request": "launch",
+            "externalConsole": true,
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "GFortran: build active file" 
+        },
+        {
+            "name": "Debug Intel Fortran File",
+            "type": "cppvsdbg",       // Windows下使用Visual Studio调试器
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],               // 如果程序需要命令行参数，在此添加
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "Intel Fortran: build active file" // 关键：运行前先执行编译任务
+        }
+    ]
+}

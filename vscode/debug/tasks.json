@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Intel Fortran: build active file",
+            "type": "shell",
+            "command": "ifx",
+            "args": [
+                "/Od",
+                "/Zi",
+                "${file}",
+                "/Fe:${fileDirname}\\${fileBasenameNoExtension}.exe",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "GFortran: build active file",
+            "type": "shell",
+            "command": "gfortran",
+            "args": [
+                "-g", // 生成调试信息 (对应 /Zi)
+                "-O0", // 关闭优化 (对应 /Od)
+                "-w", // 关闭所有警告 (让输出更清爽)
+                "-std=legacy", // 启用传统兼容模式 (解决代码老旧问题)
+                "-fdec", // 启用 DEC 扩展 (解决字符赋值给整数的报错)
+                "-fallow-argument-mismatch", // 允许参数不匹配 (Cowan代码常见问题)
+                "${file}", // 当前源文件
+                "-o", // 指定输出文件 (对应 /Fe)
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        }
+    ]
+}

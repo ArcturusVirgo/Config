@@ -1,0 +1,67 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SSH Pipe Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      // 注意：这里填的是【服务器上】可执行文件的绝对路径，不再是本地路径！
+      "program": "/home/Lpp_Hecw/Project/Fortran/SpecImg3DPro/bin/SpeIma3D",
+      "args": [],
+      "stopAtEntry": false,
+      // 填服务器上的工作目录
+      "cwd": "/home/Lpp_Hecw/Project/Fortran/SpecImg3DPro",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+
+      // 核心魔法在这里：通过 SSH 管道连接
+      "pipeTransport": {
+        // 这里填写服务器上的 gdb 命令（如果用原生就写 gdb，如果用 intel 的就写相应的命令名）
+        "debuggerPath": "gdb-oneapi",
+        "pipeProgram": "C:/Windows/System32/OpenSSH/ssh.exe",
+        "pipeArgs": [
+          "-p",
+          "3382",
+          "Lpp_Hecw@172.23.45.93" // 你的服务器账号和IP
+        ],
+        "pipeCwd": ""
+      },
+      "preLaunchTask": "Remote Compile",
+
+      // 路径映射：告诉本地 VS Code，服务器上的代码对应本地的哪个文件夹
+      "sourceFileMap": {
+        "/home/Lpp_Hecw/Project/Fortran/SpecImg3DPro": "${workspaceFolder}"
+      },
+      "setupCommands": [
+        {
+          "description": "为 gdb 启用整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "取消GDB打印长度限制，防止长数组的JSON字符串被截断",
+          "text": "set print elements 0",
+          "ignoreFailures": true
+        },
+        {
+          "description": "加载 Debug Visualizer 桥接脚本",
+          "text": "source /home/Lpp_Hecw/Project/Fortran/SpecImg3DPro/gdb_plot.py",
+          "ignoreFailures": true
+        },
+        {
+          "description": "单步调试时锁定当前线程，防止乱跳",
+          "text": "set scheduler-locking step",
+          "ignoreFailures": true
+        }
+      ]
+      // "setupCommands": [
+      //     {
+      //         "description": "为 gdb 启用整齐打印",
+      //         "text": "-enable-pretty-printing",
+      //         "ignoreFailures": true
+      //     }
+      // ]
+    }
+  ]
+}

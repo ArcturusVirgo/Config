@@ -1,0 +1,102 @@
+{
+  // ============================== 系统配置 ==============================
+  // 工作区信任
+  "security.workspace.trust.untrustedFiles": "open",
+  "security.workspace.trust.enabled": false,
+  // VS Code 启动
+  "files.autoGuessEncoding": true,
+  "window.restoreWindows": "none",
+  "window.openFilesInNewWindow": "on",
+  // 视觉效果
+  "workbench.colorTheme": "Bearded Theme Arc",
+  "workbench.list.smoothScrolling": true,
+  "workbench.iconTheme": "bearded-icons",
+  //文件资源管理器相关
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmPasteNative": false,
+  // 界面配置
+  "window.menuBarVisibility": "classic",
+  // 更新相关
+  "update.showReleaseNotes": false,
+  // ============================== 编辑器配置 ==============================
+  // 外观
+  "editor.fontFamily": "Ubuntu Mono, Source Han Sans CN, CodeNewRoman Nerd Font Mono",
+  "editor.fontSize": 21,
+  "editor.lineHeight": 1.4,
+  // 视觉效果
+  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "on", // 光标平滑
+  "editor.cursorBlinking": "smooth", // 光标动画样式
+  // 行为
+  "editor.mouseWheelZoom": true,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "files.autoSave": "afterDelay",
+  // ============================== 终端配置 ==============================
+  // 默认终端
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  // 外观
+  "terminal.integrated.fontFamily": "CodeNewRoman Nerd Font Mono",
+  "terminal.integrated.fontSize": 20,
+  "terminal.integrated.lineHeight": 1.1,
+  // 视觉效果
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.cursorBlinking": true,
+  // 行为
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.enablePersistentSessions": false,
+  "accessibility.signals.terminalBell": {
+    "sound": "on",
+  },
+  "terminal.integrated.enableVisualBell": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  // ============================== Fortan语言  Modern Fortran 插件 ==============================
+  // 检查器相关
+  "fortran.linter.compiler": "ifx",
+  "fortran.linter.compilerPath": "D:\\Intel\\oneAPI\\compiler\\latest\\windows\\bin\\ifx.exe",
+  // 语言服务器相关
+  "fortran.fortls.path": "D:\\PythonVirtualEnvironment\\FortranSever\\Scripts\\fortls.exe",
+  "fortran.fortls.excludeDirectories": [
+    ".git",
+    "build",
+    "bin",
+    "obj",
+    "__pycache__",
+  ],
+  // 格式化相关
+  "fortran.formatting.path": "D:\\PythonVirtualEnvironment\\FortranSever\\Scripts",
+  "fortran.formatting.formatter": "fprettify",
+  "fortran.formatting.fprettifyArgs": [
+    "-c",
+    "C:\\Users\\ArcturusVirgo\\.config\\fprettify\\fprettify.cfg",
+  ],
+  // 其他
+  "fortran.notifications.releaseNotes": false,
+  // ============================== python 语言 ==============================
+  "python.defaultInterpreterPath": "D:\\PythonVirtualEnvironment\\Common\\Scripts\\python.exe",
+  "notebook.editorOptionsCustomizations": {
+    "editor.tabSize": 4,
+    "editor.indentSize": 4,
+    "editor.insertSpaces": true,
+  },
+  // ============================== 其他语言格式化 ==============================
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  // ============================== sftp 插件 ==============================
+  "sftp.downloadWhenOpenInRemoteExplorer": false,
+  "sftp.printDebugLog": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  // ============================== cmake 插件 ==============================
+  "cmake.showConfigureWithDebuggerNotification": false,
+  "cmake.configureOnEdit": false,
+  "cmake.configureOnOpen": false,
+  "cmake.automaticReconfigure": false,
+  "cmake.buildBeforeRun": false,
+  
+  // ============================== copilot ==============================
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "git.openRepositoryInParentFolders": "never",
+  "workbench.colorTheme": "Bearded Theme Arc",
+  // ============================== 其他 ==============================
+}

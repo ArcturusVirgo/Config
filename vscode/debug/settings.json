@@ -1,0 +1,26 @@
+{
+    // "files.exclude": {
+    //     "**/.git": true,
+    //     "**/.svn": true,
+    //     "**/.hg": true,
+    //     "**/.DS_Store": true,
+    //     "**/Thumbs.db": true,
+    //     "**/*__genmod.f90": true,
+    //     "**/*__genmod.mod": true,
+    //     "**/*.pdb": true,
+    //     "**/*.obj": true,
+    //     "**/*.ilk": true,
+    // },
+    // "fortran.linter.compiler": "gfortran",
+    // "fortran.linter.compilerPath": "D:\\Scoop\\apps\\mingw\\current\\bin\\gfortran.exe"
+
+    "fortran.linter.compiler": "ifx",
+    "fortran.linter.compilerPath": "D:\\Intel\\oneAPI\\compiler\\latest\\bin\\ifx.exe",
+    "fortran.linter.extraArgs": [
+        "-module:${workspaceFolder}/.vscode/.fmod",
+        "/nofpp"
+    ],
+    "fortran.linter.includePaths": [
+        "${workspaceFolder}/.vscode/.fmod"
+    ],
+}

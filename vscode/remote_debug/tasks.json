@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Remote Compile", // 任务的名称，后面在 launch.json 中要用到
+            "type": "shell",
+            // 使用与 pipeTransport 相同的本地 ssh 绝对路径
+            "command": "C:\\Windows\\System32\\OpenSSH\\ssh.exe", 
+            "args": [
+                "-p", "3382",
+                "Lpp_Hecw@172.23.45.93",
+                // 登录后，直接切换目录并执行编译脚本
+                "cd /home/Lpp_Hecw/Project/Fortran/SpecImg3DPro && sh compile.sh"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",       // 编译时自动弹出终端显示编译进度
+                "panel": "shared",        // 在同一个终端面板输出
+                "clear": true             // 每次编译前清空上一次的输出
+            },
+            "problemMatcher": []
+        }
+    ]
+}
