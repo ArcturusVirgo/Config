@@ -6,7 +6,9 @@ vim.pack.add({
 
 local setup_treesitter = function()
     local treesitter = require("nvim-treesitter")
-    treesitter.setup({})
+    treesitter.setup({
+        fold = { enable = true }, -- 启用 Tree-sitter 折叠
+    })
     -- 预设需要安装的语法解析器
     local ensure_installed = {
         "vim", "vimdoc", "rust", "c", "cpp", "go", "html", "css", "javascript",

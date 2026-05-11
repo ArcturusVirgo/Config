@@ -86,6 +86,13 @@ keymap("i", "<C-/", "<Esc>gcca", { remap = true, desc = "插入模式切换行�
 -- ==========================================
 keymap("n", "<leader>re", ":restart<CR>", { desc = "重启 nvim"})
 
+-- ==========================================
+-- 剪切板相关 
+-- ==========================================
+-- 将普通模式 (n) 和可视模式 (v) 下的 d 映射为 "_d
+keymap({'n', 'v'}, 'd', '"_d', { noremap = true })
+-- 如果你希望大写的 D (删除到行尾) 也同样不污染剪贴板：
+keymap({'n', 'v'}, 'D', '"_D', { noremap = true })
 
 -- ==========================================
 -- 取消绑定
@@ -96,6 +103,8 @@ keymap("n", "J", "<Nop>", { noremap = true, silent = true })
 keymap("n", "q", "<Nop>", { noremap = true, silent = true })
 -- 禁用 Q 键的默认功能（进入 Ex 模式），以防止误触导致编辑中断
 keymap("n", "Q", "<Nop>", { noremap = true, silent = true })
+-- 禁用帮助跳转
+keymap('n', 'K', '<Nop>', { noremap = true, silent = true })
 
 
 

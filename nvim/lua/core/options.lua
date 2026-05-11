@@ -58,6 +58,26 @@ vim.g.fortran_fixed_source = 1 -- 强制启用固定格式(F77)特有规则
 vim.g.fortran_have_tabs = 1    -- 允许解析旧代码中不规范的 Tab
 vim.g.fortran_do_enddo = 1     -- 强制区分并高亮 DO 和 ENDDO 块
 
+-----------------------------------------------------------
+-- 7. 代码折叠
+-----------------------------------------------------------
+-- 启用折叠
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99          -- 默认展开所有（0=全折叠）
+vim.opt.foldlevelstart = 99 
+vim.opt.foldcolumn = "1"        -- 左侧显示折叠标记列
+-- 折叠方法（三选一）
+-- vim.opt.foldmethod = "indent"   -- 按缩进折叠（通用）
+-- vim.opt.foldmethod = "syntax"  -- 按语法折叠（需文件类型支持）
+-- vim.opt.foldmethod = "manual"  -- 手动创建折叠
+-- 优先 Tree-sitter，否则 indent
+local status, _ = pcall(require, "nvim-treesitter")
+if status then
+  vim.opt.foldmethod = "expr"
+  vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+else
+  vim.opt.foldmethod = "indent"
+end
 
 local augroup = vim.api.nvim_create_augroup("CustomCursorLine", { clear = true })
 -- 3. 监听 ColorScheme 事件，确保在主题加载后强制覆盖样式

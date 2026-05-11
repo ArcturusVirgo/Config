@@ -30,3 +30,4 @@ vim.lsp.config("fortls", {
 
 -- 启用LSP
 vim.lsp.enable({'lua_ls', 'fortls', 'pyright'})
+

@@ -1,6 +1,6 @@
 vim.pack.add({
     -- 行后诊断信息显示
-    { src = "https://www.github.com/rachartier/tiny-inline-diagnostic.nvim" }
+    { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" }
 })
 
 require("tiny-inline-diagnostic").setup({})

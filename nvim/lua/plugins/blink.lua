@@ -7,12 +7,14 @@ vim.pack.add({
 require("blink.cmp").setup({
     keymap = {
         preset = "none",
-        ["<C-Space>"] = {"show", "hide"},
+        ["<C-Space>"] = {'show', 'show_documentation', 'hide_documentation'},
         ["<CR>"] = {"accept", "fallback"},
+        ['<C-e>'] = { 'hide', 'fallback' },
         ["<C-j>"] = {"select_next", "fallback"},
         ["<C-k>"] = {"select_prev", "fallback"},
-        ["<Tab>"] = {"snippet_forward", "fallback"},
-        ["<S-Tab>"] = {"snippet_backward", "fallback"}
+        -- 代码片段前后跳转
+        ['<Tab>'] = { 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
     },
     -- appearance = { nerd_font_variant = "mono" },
     completion = {menu = {auto_show = true}},
