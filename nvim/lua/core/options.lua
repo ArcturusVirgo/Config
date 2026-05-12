@@ -49,6 +49,8 @@ opt.splitbelow = true          -- 水平分屏时 (split)，新窗口默认在�
 -- opt.mouse = "a"                -- 允许在所有模式下使用鼠标 (点击跳转光标、调整窗口大小等)
 opt.undofile = false            -- 开启持久化撤销历史 (即使关闭文件再打开，依然可以撤销之前的修改)
 opt.swapfile = false           -- 禁用 swap 文件 (现代编辑器通常不需要，搭配 undofile 更好)
+-- 关闭自动切换到当前文件目录
+opt.autochdir = false
 
 -----------------------------------------------------------
 -- 7. Fortran 语法高亮增强 (High Precision Mode)
@@ -79,6 +81,9 @@ else
   vim.opt.foldmethod = "indent"
 end
 
+-----------------------------------------------------------
+-- 设置高亮行样式
+-----------------------------------------------------------
 local augroup = vim.api.nvim_create_augroup("CustomCursorLine", { clear = true })
 -- 3. 监听 ColorScheme 事件，确保在主题加载后强制覆盖样式
 vim.api.nvim_create_autocmd("ColorScheme", {
