@@ -10,6 +10,9 @@ system_config_folder_dict = {
 current_folder_dict = {
     'neovim': Path('./nvim'),
 }
+ignore_files_dict = {
+    'neovim': ['nvim-pack-lock.json'],
+}
 
 if len(sys.argv) != 4:
     print('Usage: python manage.py <os_name> <config_name> <operate>')
@@ -27,16 +30,17 @@ if config_name not in current_folder_dict:
     print('Unsupported configuration')
     sys.exit(1)
 current_folder = current_folder_dict[config_name]
+ignore_list = ignore_files_dict.get(config_name, [])
 
 if operate == 'load':
     if os.path.exists(system_config_folder):
         shutil.rmtree(system_config_folder)
 
-    shutil.copytree(current_folder, system_config_folder)
+    shutil.copytree(current_folder, system_config_folder, ignore=shutil.ignore_patterns(*ignore_list))
 
 if operate == 'save':
     if os.path.exists(current_folder):
         shutil.rmtree(current_folder)
 
-    shutil.copytree(system_config_folder, current_folder)
+    shutil.copytree(system_config_folder, current_folder, ignore=shutil.ignore_patterns(*ignore_list))
 
