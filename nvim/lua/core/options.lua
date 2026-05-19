@@ -6,7 +6,6 @@ local opt = vim.opt
 opt.fileencoding = "utf-8"     -- 设置文件默认编码为 utf-8，避免中文乱码
 opt.encoding = "utf-8"
 opt.fileencodings = "utf-8,gb18030,gbk,cp936,latin1"
-opt.clipboard = "unnamedplus"  -- 允许 neovim 与系统剪贴板进行交互 (需安装 xclip/wl-clipboard)
 opt.updatetime = 250           -- 降低交换文件的写入延迟 (默认 4000ms)，让插件响应更快
 opt.timeoutlen = 300           -- 按键序列等待时间 (毫秒)，缩短以提升快捷键响应感
 
@@ -82,6 +81,26 @@ if status then
 else
   vim.opt.foldmethod = "indent"
 end
+
+-----------------------------------------------------------
+-- 剪切板 
+-----------------------------------------------------------
+-- 开启 Neovim 0.10+ 内置的 OSC52 剪贴板支持
+vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+}
+
+-- 将 Neovim 的默认 yank 操作同步到系统剪贴板 (+)
+opt.clipboard = "unnamedplus"
+
 
 -----------------------------------------------------------
 -- 设置高亮行样式
