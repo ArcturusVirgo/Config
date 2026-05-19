@@ -12,7 +12,25 @@ vim.pack.add({
 
 
 require('neo-tree').setup({
-  -- options go here
+    close_if_last_window = true,
+    window = {
+        position = "left",
+        width = 30,
+        auto_expand_width = false,
+    },
+    filesystem = {
+        filtered_items = {
+            visible = false,
+            hide_dotfiles = true,
+            hide_gitignored = true,
+        },
+        follow_current_file = {
+            enabled = true,
+            leave_dirs_open = false,
+        },
+        use_libuv_file_watcher = true,
+    },
 })
 
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", {desc = "开关文件树"})
+
