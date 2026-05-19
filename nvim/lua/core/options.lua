@@ -92,10 +92,10 @@ vim.g.clipboard = {
         ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
         ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
     },
-    paste = {
-        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-    },
+    -- paste = {
+    --     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    --     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    -- },
 }
 
 -- 将 Neovim 的默认 yank 操作同步到系统剪贴板 (+)
