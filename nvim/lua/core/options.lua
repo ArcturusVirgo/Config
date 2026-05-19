@@ -48,7 +48,7 @@ opt.splitbelow = true          -- 水平分屏时 (split)，新窗口默认在�
 -----------------------------------------------------------
 -- 6. 其他实用配置
 -----------------------------------------------------------
--- opt.mouse = "a"                -- 允许在所有模式下使用鼠标 (点击跳转光标、调整窗口大小等)
+opt.mouse = ''                 -- 允许在所有模式下使用鼠标 (点击跳转光标、调整窗口大小等)
 opt.undofile = false            -- 开启持久化撤销历史 (即使关闭文件再打开，依然可以撤销之前的修改)
 opt.swapfile = false           -- 禁用 swap 文件 (现代编辑器通常不需要，搭配 undofile 更好)
 -- 关闭自动切换到当前文件目录
@@ -101,3 +101,47 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 -- 4. 如果你当前没有显式加载任何第三方主题，手动触发一次以确保配置在启动时生效
 vim.cmd("doautocmd ColorScheme")
+
+-----------------------------------------------------------
+-- 启动时一次性设置工作目录（永不自动切换）
+-----------------------------------------------------------
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  once = true, -- 关键：只执行一次
+  callback = function()
+    -- 获取命令行参数
+    local args = vim.v.argv
+    if #args < 2 then return end -- 没有参数，保持当前目录
+
+    -- 找到第一个非选项参数（跳过 -c、-u 等选项）
+    local target = nil
+    for i = 2, #args do
+      local arg = args[i]
+      if not arg:match("^%-") then
+        target = arg
+        break
+      end
+    end
+
+    if not target then return end
+
+    -- 解析绝对路径
+    local abs_path = vim.fn.fnamemodify(target, ":p")
+    local stat = vim.loop.fs_stat(abs_path)
+    if not stat then return end
+
+    local cwd
+    if stat.type == "directory" then
+      -- 打开的是目录：工作目录设为该目录
+      cwd = abs_path
+    else
+      -- 打开的是文件：工作目录设为文件所在目录
+      cwd = vim.fn.fnamemodify(abs_path, ":h")
+    end
+
+    -- 设置工作目录（全局生效，所有标签页/分屏共享）
+    vim.cmd.cd(cwd)
+    vim.notify("Working directory has been fixed: " .. cwd, vim.log.levels.INFO)
+  end,
+})
+

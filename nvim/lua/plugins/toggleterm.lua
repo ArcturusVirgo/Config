@@ -3,8 +3,14 @@ vim.pack.add({
     {src = "https://github.com/akinsho/toggleterm.nvim", }
 })
 
+local target_shell = "bash" -- 默认使用 bash (Linux/macOS)
+
+if vim.fn.has("win32") == 1 then
+    target_shell = "pwsh"   -- 如果是 Windows，则使用 pwsh
+end
+
 require("toggleterm").setup({
-    shell = 'pwsh',
+    shell = target_shell,
     -- 默认打开的快捷键 (这里设置为 Ctrl + \，你也可以换成 Ctrl + t 等)
     open_mapping = [[<c-\>]],
 
