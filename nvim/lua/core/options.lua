@@ -83,23 +83,36 @@ else
 end
 
 -----------------------------------------------------------
--- 剪切板 
+-- 剪切板 (支持本地与 SSH 环境智能切换)
 -----------------------------------------------------------
-vim.opt.clipboard = "unnamedplus"
+-- 判断当前是否处于 SSH 环境
+local is_ssh = vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil
 
--- 仅在检测到 SSH 环境时，才覆盖默认剪贴板使用 OSC 52
-if vim.env.SSH_TTY or vim.env.SSH_CLIENT then
-    vim.g.clipboard = {
-        name = 'OSC 52',
-        copy = {
-            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-        },
-        paste = {
-            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-        },
-    }
+if is_ssh then
+    -- ==========================================
+    -- [ SSH 环境策略 ]
+    -- ==========================================
+    -- 1. 保持 Neovim 内部寄存器独立，确保 'p' 秒贴，防止向 WezTerm 索要数据卡死
+    -- 注意：这里不设置 opt.clipboard
+
+    -- 2. 监听文本 Yank 事件，主动将内容发送到本地 Windows 剪贴板
+    vim.api.nvim_create_autocmd("TextYankPost", {
+        group = vim.api.nvim_create_augroup("OSC52Yank", { clear = true }),
+        callback = function()
+            -- 仅当操作是 'y' (复制) 时才同步到本地剪贴板
+            -- 避免按 'd' 或 'x' 删除文本时污染 Windows 剪贴板
+            if vim.v.event.operator == 'y' then
+                require('vim.ui.clipboard.osc52').copy('+')(vim.v.event.regcontents)
+            end
+        end,
+    })
+else
+    -- ==========================================
+    -- [ 本地环境策略 ]
+    -- ==========================================
+    -- 直接将 Neovim 的默认寄存器绑定到系统剪贴板
+    -- 因为在本地，系统剪贴板工具（如 win32yank 或 wl-copy）是可以直接调用的
+    vim.opt.clipboard = "unnamedplus"
 end
 
 -----------------------------------------------------------

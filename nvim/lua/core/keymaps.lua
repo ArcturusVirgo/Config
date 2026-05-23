@@ -82,12 +82,48 @@ keymap("n", "<C-q>", "<C-v>", { desc = "列编辑" })
 -- ==========================================
 -- 切换注释
 -- ==========================================
-keymap("n", "<C-_>", "gcc", { remap = true, desc = "Ctrl+/ 注释当前行" })
+local function toggle_comment_insert()
+    -- 获取当前行内容
+    local line = vim.api.nvim_get_current_line()
+
+    -- 匹配空行（包含全空格的行）
+    if line:match("^%s*$") then
+        local cs = vim.bo.commentstring
+        if cs and cs ~= "" then
+            -- 将 commentstring (例如 "-- %s") 中的 %s 替换为空，插入到当前行
+            local leader = cs:gsub("%%s", "")
+            vim.api.nvim_set_current_line(line .. leader)
+            -- 将光标移动到行尾，保持插入模式
+            vim.cmd("startinsert!")
+        end
+    else
+        -- 如果不是空行，使用原本的逻辑：退回 Normal -> 注释 -> 在行尾继续插入
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>gcca", true, false, true), "m", false)
+    end
+end
+local function toggle_comment_normal()
+    local line = vim.api.nvim_get_current_line()
+    if line:match("^%s*$") then
+        local cs = vim.bo.commentstring
+        if cs and cs ~= "" then
+            local leader = cs:gsub("%%s", "")
+            vim.api.nvim_set_current_line(line .. leader)
+            -- 普通模式下注释空行后，自动进入插入模式会更顺手
+            vim.cmd("startinsert!")
+        end
+    else
+        -- 触发 gcc 
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("gcc", true, false, true), "m", false)
+    end
+end
+-- 设置快捷键
+keymap("n", "<C-_>", toggle_comment_normal, { desc = "Ctrl+/ 注释当前行(智能空行)" })
 keymap("v", "<C-_>", "gc",  { remap = true, desc = "Ctrl+/ 注释选中块" })
-keymap("i", "<C-_>", "<Esc>gcca", { remap = true, desc = "插入模式切换行注释" })
-keymap("n", "<C-/", "gcc", { remap = true, desc = "Ctrl+/ 注释当前行" })
-keymap("v", "<C-/", "gc",  { remap = true, desc = "Ctrl+/ 注释选中块" })
-keymap("i", "<C-/", "<Esc>gcca", { remap = true, desc = "插入模式切换行注释" })
+keymap("i", "<C-_>", toggle_comment_insert, { desc = "插入模式切换行注释(智能空行)" })
+-- 兼容部分终端识别为 <C-/>
+keymap("n", "<C-/>", toggle_comment_normal, { desc = "Ctrl+/ 注释当前行(智能空行)" })
+keymap("v", "<C-/>", "gc",  { remap = true, desc = "Ctrl+/ 注释选中块" })
+keymap("i", "<C-/>", toggle_comment_insert, { desc = "插入模式切换行注释(智能空行)" })
 
 -- ==========================================
 -- 重启 nvim
