@@ -85,22 +85,22 @@ end
 -----------------------------------------------------------
 -- 剪切板 
 -----------------------------------------------------------
--- 开启 Neovim 0.10+ 内置的 OSC52 剪贴板支持
-vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-    },
-    -- paste = {
-    --     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-    --     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-    -- },
-}
+vim.opt.clipboard = "unnamedplus"
 
--- 将 Neovim 的默认 yank 操作同步到系统剪贴板 (+)
-opt.clipboard = "unnamedplus"
-
+-- 仅在检测到 SSH 环境时，才覆盖默认剪贴板使用 OSC 52
+if vim.env.SSH_TTY or vim.env.SSH_CLIENT then
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        paste = {
+            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+        },
+    }
+end
 
 -----------------------------------------------------------
 -- 设置高亮行样式
