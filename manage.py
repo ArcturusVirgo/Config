@@ -13,6 +13,7 @@ system_config_path_dict = {
     ('windows', 'powershell'): Path.home() / 'Documents' / 'PowerShell',
     # wezterm
     ('windows', 'wezterm'): Path.home() / '.wezterm.lua',
+    ('linux', 'wezterm'): Path.home() / '.wezterm.lua',
 }
 
 current_path_dict = {
@@ -23,6 +24,7 @@ current_path_dict = {
     ('windows', 'powershell'): Path('./PowerShell').resolve(),
     # wezterm
     ('windows', 'wezterm'): Path('./Wezterm/wezterm.lua').resolve(),
+    ('linux', 'wezterm'): Path('./Wezterm/wezterm.lua').resolve(),
 }
 
 def create_link(src, dst):
