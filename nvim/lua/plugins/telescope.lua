@@ -4,7 +4,7 @@ vim.pack.add({
     { src = 'https://github.com/nvim-telescope/telescope-fzf-native.nvim' },
 })
 
-require('telescope').setup{
+require('telescope').setup({
   defaults = {
     -- initial_mode = "normal",
     -- Default configuration for telescope goes here:
@@ -34,7 +34,7 @@ require('telescope').setup{
     -- }
     -- please take a look at the readme of the extension you want to configure
   }
-}
+})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })

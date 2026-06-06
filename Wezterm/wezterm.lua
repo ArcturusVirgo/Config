@@ -88,7 +88,21 @@ config.set_environment_variables = {
     WT_SESSION = "1",
 }
 
-
-
+-- ==========================================
+-- 快捷键绑定 / Key Bindings
+-- ==========================================
+config.keys = {
+    -- 修复终端环境下的退格与删除行为
+    {
+        key = 'Backspace',
+        mods = 'NONE',
+        action = wezterm.action.SendString '\x7f'
+    },
+    {
+        key = 'Delete',
+        mods = 'NONE',
+        action = wezterm.action.SendString '\x1b[3~'
+    },
+}
 
 return config

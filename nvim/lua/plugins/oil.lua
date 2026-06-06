@@ -1,6 +1,8 @@
 vim.pack.add({
     { src = 'https://github.com/nvim-mini/mini.icons'},
     { src = 'https://github.com/stevearc/oil.nvim'},
+    { src = "https://github.com/nvim-tree/nvim-web-devicons"},
+
 })
 
 require("oil").setup({
@@ -17,7 +19,7 @@ require("oil").setup({
     ["<BS>"] = "actions.parent",
 
     -- 可选：Oil 默认使用 "-" 返回上一级，如果你想完全禁用默认的 "-"，可以取消下面这行的注释
-    ["-"] = "actions.close", 
+    ["-"] = "actions.close",
   },
 })
 

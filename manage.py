@@ -14,6 +14,8 @@ system_config_path_dict = {
     # wezterm
     ('windows', 'wezterm'): Path.home() / '.wezterm.lua',
     ('linux', 'wezterm'): Path.home() / '.wezterm.lua',
+    # yazi
+    ('linux', 'yazi'): Path.home() / '.config' / 'yazi',
 }
 
 current_path_dict = {
@@ -25,6 +27,8 @@ current_path_dict = {
     # wezterm
     ('windows', 'wezterm'): Path('./Wezterm/wezterm.lua').resolve(),
     ('linux', 'wezterm'): Path('./Wezterm/wezterm.lua').resolve(),
+    # yazi
+    ('linux', 'yazi'): Path('./yazi').resolve(),
 }
 
 def create_link(src, dst):
