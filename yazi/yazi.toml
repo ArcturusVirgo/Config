@@ -1,0 +1,41 @@
+# ==================================================
+# 1. 定义打开器 (Opener)
+# ==================================================
+[opener]
+# 定义在终端内运行的程序
+# 注意：最新版 Yazi 使用 %s 代表选中的文件路径（自动处理空格转义）
+edit = [
+    { run = 'nvim %s; ya emit quit', block = true, desc = "Neovim" },
+]
+
+play = [
+    { run = 'xdg-open %s', orphan = true, desc = "System Default" },
+]
+
+vscode = [
+    { run = 'code %s', orphan = true, desc = "VSCode" },
+]
+
+
+# ==================================================
+# 2. 定义匹配规则 (Rules)
+# ==================================================
+[open]
+rules = [
+    # --- 文件夹规则 ---
+    # 【修正】：将原先的 name 改为了 url
+    { url = "*/", use = [ "edit", "play" ] },
+
+    # --- 文本类文件 ---
+    { mime = "text/*", use = [ "edit", "play" ] },
+    { url = "*.json", use = [ "edit", "play" ] },
+    { url = "*.lua", use = [ "edit", "play" ] },
+
+    # --- 媒体类文件 ---
+    { mime = "video/*", use = [ "play", "edit" ] },
+    { mime = "audio/*", use = [ "play" ] },
+    { mime = "image/*", use = [ "play" ] },
+
+    # --- 兜底规则 ---
+    { url = "*", use = [ "play", "edit" ] },
+]
