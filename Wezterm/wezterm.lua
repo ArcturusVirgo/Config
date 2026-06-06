@@ -39,7 +39,7 @@ config.default_prog = { target_shell }
 -- 主题
 config.color_scheme = 'Catppuccin Mocha'
 -- 字体
-config.font_size = 18
+config.font_size = font_size
 config.line_height = 1.2
 config.font = wezterm.font_with_fallback {ubuntu_font_name, 'CodeNewRoman Nerd Font Mono', '思源黑体'}
 -- 光标设置
