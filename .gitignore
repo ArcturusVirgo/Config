@@ -1,2 +1,4 @@
 nvim/init.bak.lua
 nvim/nvim-pack-lock.json
+yazi/flavors/
+yazi/package.toml
