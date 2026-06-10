@@ -6,7 +6,7 @@ local config = wezterm.config_builder()
 -- ==================================================
 -- windows
 local target_shell = "pwsh"
-local ubuntu_font_name = "Ubuntu Mono"
+local ubuntu_font_name = "CodeNewRoman Nerd Font Mono"
 local char_with = 120
 local char_height = 22
 local font_size = 18
@@ -41,7 +41,7 @@ config.color_scheme = 'Catppuccin Mocha'
 -- 字体
 config.font_size = font_size
 config.line_height = 1.2
-config.font = wezterm.font_with_fallback {ubuntu_font_name, 'CodeNewRoman Nerd Font Mono', '思源黑体'}
+config.font = wezterm.font_with_fallback {ubuntu_font_name}
 -- 光标设置
 config.cursor_blink_rate = 500
 

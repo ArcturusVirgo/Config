@@ -98,6 +98,9 @@ def remove_link(src, dst):
 def main():
     if len(sys.argv) != 4:
         print('Usage: python manage.py <os_name> <config_name> <operate>')
+        print('       python manage.py windows  neovim   link')
+        print('                        linux    wezterm  unlink')
+        print('                                 ...')
         print('Example: python manage.py windows neovim link')
         sys.exit(1)
 
