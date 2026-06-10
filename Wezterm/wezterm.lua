@@ -54,27 +54,33 @@ config.initial_rows = char_height
 -- 保留融合按钮和标签栏，以此作为鼠标拖拽的“把手”
 config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
 config.integrated_title_buttons = { 'Hide', 'Maximize', 'Close' }
--- 标签页设置
-config.hide_tab_bar_if_only_one_tab = false -- 只有一个标签时隐藏标签栏
-config.use_fancy_tab_bar = false -- 简洁标签栏
-config.tab_bar_at_bottom = false -- 标签栏放在底部
-config.show_new_tab_button_in_tab_bar = false
-config.show_tab_index_in_tab_bar = false
+
+-- ==================================================
+-- 标签页设置 (Tab Bar)
+-- ==================================================
+config.hide_tab_bar_if_only_one_tab = false -- 只有一个标签时依然显示标签栏
+config.use_fancy_tab_bar = true -- 简洁标签栏
+config.tab_bar_at_bottom = false -- 标签栏在顶部
+config.show_new_tab_button_in_tab_bar = true -- 显示 "+" 按钮，方便鼠标点击新建
+config.show_tab_index_in_tab_bar = true      -- 显示标签索引
+
 -- 统一个颜色，让顶部的拖拽区和终端背景融为一体
 config.colors = {
     tab_bar = {
-        background = '#1e1e2e', -- 替换为你 Catppuccin Mocha 主题的背景色
+        background = '#1e1e2e', -- Catppuccin Mocha
         active_tab = { bg_color = '#1e1e2e', fg_color = '#cdd6f4' },
         inactive_tab = { bg_color = '#1e1e2e', fg_color = '#a6adc8' },
     }
 }
 -- 边距设置
 config.window_padding = {left = 20, right = 5, top = 5, bottom = 5}
--- 自定义标签页标题事件
+
+-- 【修改】动态生成标签页标题，显示序号和当前进程标题
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
-    -- 返回几个空格作为占位符，文字完全消失
+    local title = tab.active_pane.title
+    -- 取消硬编码的 ' Hello Virgo '，改为显示: " 1: pwsh " 这种格式
     return {
-        { Text = ' Hello Virgo ' },
+        { Text = ' ' .. tostring(tab.tab_index + 1) .. ': ' .. title .. ' ' },
     }
 end)
 
@@ -103,6 +109,20 @@ config.keys = {
         mods = 'NONE',
         action = wezterm.action.SendString '\x1b[3~'
     },
+
+    -- Ctrl+Shift+T 新建标签页
+    { key = 'T', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
+    -- Ctrl+Shift+W 关闭当前标签页
+    { key = 'W', mods = 'CTRL|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = true } },
+    -- Ctrl+Tab 切换到下一个标签页
+    { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivateTabRelative(1) },
+    -- Ctrl+Shift+Tab 切换到上一个标签页
+    { key = 'Tab', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+
+    -- 也可以使用 Alt+1, Alt+2 等直接跳转到特定标签页
+    { key = '1', mods = 'ALT', action = wezterm.action.ActivateTab(0) },
+    { key = '2', mods = 'ALT', action = wezterm.action.ActivateTab(1) },
+    { key = '3', mods = 'ALT', action = wezterm.action.ActivateTab(2) },
 }
 
 return config
