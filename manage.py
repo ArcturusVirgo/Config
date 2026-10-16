@@ -16,6 +16,9 @@ system_config_path_dict = {
     ('linux', 'wezterm'): Path.home() / '.wezterm.lua',
     # yazi
     ('linux', 'yazi'): Path.home() / '.config' / 'yazi',
+    # alacritty
+    ('linux', 'alacritty'): Path.home() / '.config' / 'alacritty' / 'alacritty.toml',
+
 }
 
 current_path_dict = {
@@ -29,6 +32,8 @@ current_path_dict = {
     ('linux', 'wezterm'): Path('./Wezterm/wezterm.lua').resolve(),
     # yazi
     ('linux', 'yazi'): Path('./yazi').resolve(),
+    # alacritty
+    ('linux', 'alacritty'): Path('./alacritty/alacritty.toml').resolve(),
 }
 
 def create_link(src, dst):

@@ -1,0 +1,67 @@
+# ========== 窗口 ==========
+[window]
+padding = { x = 8, y = 8 }
+opacity = 1.0
+decorations = "full"
+dynamic_title = true
+startup_mode = "Windowed"
+
+# ========== 字体（推荐 JetBrainsMono Nerd Font，pacman 可装） ==========
+[font]
+size = 13.0
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+
+# ========== 光标 ==========
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+# ========== 滚动缓冲区 ==========
+[scrolling]
+history = 10000
+
+# ========== 选择复制 ==========
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+# ========== 配色 One Dark ==========
+[colors.primary]
+background = "#1e2127"
+foreground = "#abb2bf"
+
+[colors.normal]
+black   = "#1e2127"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#d19a66"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#abb2bf"
+
+[colors.bright]
+black   = "#5c6370"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#d19a66"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#ffffff"
+
+# ========== 快捷键 ==========
+[keyboard]
+bindings = [
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+]
+
+# ========== 鼠标 ==========
+[mouse]
+hide_when_typing = true

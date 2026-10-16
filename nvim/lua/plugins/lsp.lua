@@ -29,9 +29,47 @@ vim.lsp.config("fortls", {
 
     filetypes = { "fortran" },
 })
+vim.lsp.config("clangd", {
+    single_file_support = true,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--function-arg-placeholders",
+        "-j=8",
+    },
+    root_markers = {
+        ".git",
+        "compile_commands.json",
+        "compile_flags.txt",
+        "CMakeLists.txt",
+        "Makefile",
+    },
+    init_options = {
+        clangdFileStatus = true,
+        usePlaceholders = true,
+    },
+    filetypes = { "c", "cpp", "cc", "cxx", "h", "hpp", "hh" },
+    on_attach = function(client, bufnr)
+        if client.server_capabilities.semanticTokensProvider then
+            vim.b[bufnr].semantic_tokens_ready = true
+        end
+
+        -- 可选：h/cpp 切换快捷键（clangd独有能力）
+        vim.keymap.set("n", "<leader>ch", function()
+            client.request("textDocument/switchSourceHeader", {
+                textDocument = { uri = vim.uri_from_bufnr(bufnr) }
+            }, function(_, res)
+                if res then vim.cmd.edit(vim.uri_to_fname(res)) end
+            end)
+        end, { buffer = bufnr, desc = "Clangd: switch header/source" })
+    end,
+})
 
 -- 启用LSP
-vim.lsp.enable({'lua_ls', 'fortls', 'pyright'})
+vim.lsp.enable({'lua_ls', 'fortls', 'pyright', 'clangd'})
 
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
