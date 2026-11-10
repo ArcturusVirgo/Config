@@ -1,0 +1,33 @@
+function main(config) {
+    const wifiName = "WLAN";
+
+    // 1. 删除全局出口绑定
+    // DIRECT 使用 Windows 默认路由
+    delete config["interface-name"];
+
+    // 2. 为普通代理节点指定 WLAN
+    if (Array.isArray(config.proxies)) {
+        config.proxies.forEach(proxy => {
+            const type = (proxy.type || "").toLowerCase();
+
+            // 跳过直连、拒绝和 DNS 类型
+            if (["direct", "reject", "reject-drop", "dns"]
+                .includes(type)) {
+                return;
+            }
+
+            proxy["interface-name"] = wifiName;
+        });
+    }
+
+    // 3. 为代理提供器中的节点指定 WLAN
+    if (config["proxy-providers"]) {
+        Object.values(config["proxy-providers"])
+            .forEach(provider => {
+                provider.override = provider.override || {};
+                provider.override["interface-name"] = wifiName;
+            });
+    }
+
+    return config;
+}
